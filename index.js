@@ -18,11 +18,11 @@ app.use(route)
 
 app.use('/',home);
 
-app.use('/graph',graph);
+app.use('/feature_graph',graph);
 
-app.use('/graphbar',graphbar);
+app.use('/feature_graphbar',graphbar);
 
-app.use('/search',search);
+app.use('/feature_search',search);
 
 const publicPath = path.resolve('public');
 app.use(express.static(publicPath));
