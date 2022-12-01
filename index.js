@@ -1,31 +1,40 @@
 import express, { query } from 'express';
 import mysql from 'mysql';
 import ejs from 'ejs';
+import {route} from './router.js'
+import path, { resolve } from 'path';
+import bodyParser from 'body-parser';
+import session from 'express-session';
 
-var route = express.Router();
+import { home } from "./controller/feature_homepage.js";
+import { graph } from "./controller/feature_graph.js";
+import { graphbar } from "./controller/feature_graphbar.js";
+import { search } from "./controller/feature_search.js";
 
-//Buat Database Book Game Of Thrones
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'got'
-});
+const PORT = 8080;
+const app = express();
 
-const dbConnect = () => {
-    return new Promise((resolve,reject) => {
-        pool.getConnection((err,conn) => {
-            if(err){
-                reject(err);
-            }
-            else{
-                resolve(conn);
-                
-            }
-        })
-    })
-}
+app.use(route)
+
+app.use('/',home);
+
+app.use('/graph',graph);
+
+app.use('/graphbar',graphbar);
+
+app.use('/search',search);
+
+const publicPath = path.resolve('public');
+app.use(express.static(publicPath));
+app.set('view engine','ejs');
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
-export {route};
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
+})
