@@ -22,7 +22,6 @@ app.use('/feature_graphbar',graphbar);
 
 app.use('/feature_search',search);
 
-app.use('/cariGraphBar1',graphbar);
 
 const publicPath = path.resolve('public');
 app.use(express.static(publicPath));
