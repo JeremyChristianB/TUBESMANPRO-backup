@@ -10,6 +10,7 @@ router.get('/',(req,res)=>{
 });
 
 router.post('/cariGraphBar1',async(req,res)=>{
+    const conn = await dbConnect();
     res.render('feature_graphbar');
     const query1 = (conn,queryGraphBar1)=>{
         return new Promise((resolve,reject) => {
@@ -23,7 +24,6 @@ router.post('/cariGraphBar1',async(req,res)=>{
         });
     };
     
-    const conn = await dbConnect();
     const result = await query1(conn,queryGraphBar1);
     console.log(result);
     conn.release();
