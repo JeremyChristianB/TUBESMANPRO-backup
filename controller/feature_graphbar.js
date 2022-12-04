@@ -1,10 +1,10 @@
 import express from "express";
-import { countCharacter1 } from "../query/graphbarQuery.js";
+import { db } from '../controller/database.js';
 const router = express.Router();
 
 router.get('/',(req,res)=>{
     res.render('feature_graphbar');
-    countCharacter1();
+    // countCharacter1();
 
 });
 

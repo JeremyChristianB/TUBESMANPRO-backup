@@ -1,7 +1,6 @@
 import express, { query } from 'express';
 import mysql from 'mysql';
 import ejs from 'ejs';
-import {route} from './router.js'
 import path, { resolve } from 'path';
 import bodyParser from 'body-parser';
 import session from 'express-session';
@@ -14,7 +13,6 @@ import { search } from "./controller/feature_search.js";
 const PORT = 8080;
 const app = express();
 
-app.use(route)
 
 app.use('/',home);
 
