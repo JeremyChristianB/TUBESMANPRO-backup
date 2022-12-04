@@ -17,11 +17,11 @@ const getGraphBar1 = conn => {
     })
 }
 
-router.get('/',(req,res)=>{
+router.get('/',express.urlencoded(),(req,res)=>{
     res.render('feature_graphbar');
 });
 
-router.post('/cariGraphBar1',async(req,res)=>{
+router.post('/cariGraphBar1',express.urlencoded(),async(req,res)=>{
     const conn = await dbConnect();
     const xValues = await getGraphBar1(conn);
     
@@ -29,7 +29,7 @@ router.post('/cariGraphBar1',async(req,res)=>{
     console.log(result);
     conn.release();
 
-    res.send(result);
+    res.render('/');
     console.log(xValues);
     var yValues = [55, 49, 44, 24, 15];
     var barColors = ["red", "green","blue","orange","brown"];
