@@ -21,4 +21,4 @@ const dbConnect = () => {
     })
 }
 
-export{dbConnect as db}
+export{dbConnect as dbConnect}
