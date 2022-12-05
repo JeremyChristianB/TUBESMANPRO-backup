@@ -25,11 +25,10 @@ router.post('/cariGraphBar1',express.urlencoded(),async(req,res)=>{
     const conn = await dbConnect();
     const xValues = await getGraphBar1(conn);
     
-    const result = await query1(conn,queryGraphBar1);
-    console.log(result);
+    console.log(xValues);
     conn.release();
 
-    res.render('/');
+    res.render('../Views/feature_graphbar');
     console.log(xValues);
     var yValues = [55, 49, 44, 24, 15];
     var barColors = ["red", "green","blue","orange","brown"];
