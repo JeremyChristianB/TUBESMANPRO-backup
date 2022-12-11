@@ -25,6 +25,5 @@ router.post('/searchNama',express.urlencoded(),async(req,res)=>{
     
     conn.release();
 
-    console.log(xValues);
 });
 export {router as search};
