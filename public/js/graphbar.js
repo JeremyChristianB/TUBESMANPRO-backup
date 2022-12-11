@@ -34,7 +34,7 @@ function showChart1(bookNumber){
         const arrLabel = data.Labels;
         const arrData = data.Data;
         myChart = new Chart(chart, {
-            type: 'horizontalBar',
+            type: 'bar',
             data: {
                 labels: arrLabel,
                 datasets: [{
@@ -66,7 +66,7 @@ function showChart1(bookNumber){
         };
     
         fetch('/feature_graphbar/show2', init).then(onSuccess).then(showResult2);
-    
+        console.log(obj)
         function onSuccess(response) {
             return response.json();
         }
