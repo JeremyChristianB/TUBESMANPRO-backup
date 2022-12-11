@@ -33,8 +33,6 @@ app.use('/feature_graphbar',graphbar);
 
 app.use('/feature_search',search);
 
-app.post('/cariGraphBar1',graphbar);
-
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 })
