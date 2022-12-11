@@ -7,7 +7,7 @@ const queryGraphBar1 = `SELECT Distinct Source,Count(Source) AS jumlahChar FROM 
 
 const getGraphBar1 = conn => {
     return new Promise((resolve,reject) => {
-        conn.query(`SELECT Distinct Source,Count(Source) AS jumlahChar FROM book_gabungan WHERE book LIKE 'book1' ORDER BY Count(Source) DESC Limit 10`,(err,result) => {
+        conn.query(`SELECT * FROM book_gabungan Group By Source ORDER BY Count(Source) DESC Limit 10`,(err,result) => {
             if(err){
                 reject(err);
             }else{
@@ -22,15 +22,25 @@ router.get('/',express.urlencoded(),(req,res)=>{
 });
 
 router.post('/cariGraphBar1',express.urlencoded(),async(req,res)=>{
+    const bookCari = req.body.book;
     const conn = await dbConnect();
-    const xValues = await getGraphBar1(conn);
-    
-    console.log(xValues);
-    conn.release();
+    const result = await getGraphBar1(conn);
+    const xValues = [];
+    const yValues = [];
 
-    res.render('../Views/feature_graphbar');
+
+    conn.release();
+    console.log(result);
+    const i = 0;
+    for(let data of result){
+        xValues[i] = data.Source;
+        yValues[i] = data.weight;
+        console.log(xValues[i]);
+        console.log(yValues[i]);
+    }
     console.log(xValues);
-    var yValues = [55, 49, 44, 24, 15];
+    console.log(yValues);
+
     var barColors = ["red", "green","blue","orange","brown"];
 
     // new Chart("myChart", {
