@@ -3,9 +3,9 @@ import { dbConnect } from '../controller/database.js';
 
 const router = express.Router();
 
-const getNama = conn => {
+const getNama1 = (conn,nama) => {
     return new Promise((resolve,reject) => {
-        conn.query(`SELECT `,(err,result) => {
+        conn.query(`SELECT * FROM book1 WHERE nama LIKE ?  `,(err,result) => {
             if(err){
                 reject(err);
             }else{
@@ -20,9 +20,10 @@ router.get('/',(req,res)=>{
 });
 
 router.post('/searchNama',express.urlencoded(),async(req,res)=>{
+    const nama = req.body.nama;
 
     const conn = await dbConnect();
-    
+    const result = await getNama1(conn,nama);
     conn.release();
 
 });
