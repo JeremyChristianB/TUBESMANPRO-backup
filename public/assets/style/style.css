@@ -12,6 +12,11 @@
     background-color: whitesmoke;
   }
 
+  .form1{
+    margin: 10% 0 0 55%;
+    width: 100%;
+  }
+
 
 html{
 scroll-behavior: smooth;
