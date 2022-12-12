@@ -13,15 +13,6 @@ import { search } from "./controller/feature_search.js";
 const PORT = 8080;
 const app = express();
 
-
-app.use('/',home);
-
-app.use('/feature_graph',graph);
-
-app.use('/feature_graphbar',graphbar);
-
-app.use('/feature_search',search);
-
 const publicPath = path.resolve('public');
 app.use(express.static(publicPath));
 app.set('view engine','ejs');
@@ -32,6 +23,15 @@ app.use(express.json());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+
+app.use('/',home);
+
+app.use('/feature_graph',graph);
+
+app.use('/feature_graphbar',graphbar);
+
+app.use('/feature_search',search);
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
