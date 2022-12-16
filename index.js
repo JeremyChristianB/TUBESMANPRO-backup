@@ -1,9 +1,11 @@
 import express, { query } from 'express';
+import cors from"cors";
 import mysql from 'mysql';
 import ejs from 'ejs';
 import path, { resolve } from 'path';
 import bodyParser from 'body-parser';
 import session from 'express-session';
+import SearchRoutes from "./routes/searchRoutes.js"
 
 import { home } from "./controller/feature_homepage.js";
 import { graph } from "./controller/feature_graph.js";
@@ -28,6 +30,7 @@ app.set('view engine','ejs');
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(SearchRoutes);
 
 
 app.use(bodyParser.json());
