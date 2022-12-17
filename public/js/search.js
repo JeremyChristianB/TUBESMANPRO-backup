@@ -1,59 +1,145 @@
-function load_data(query = '')
-{
-    fetch('/get_data?search_query='+query+'').then(function(response){
+// //global handler for the IDB
+// var db;
 
-        return response.json();
+// //current position
+// var position = 0;
 
-    }).then(function(responseData){
+// document.addEventListener('DOMContentLoaded', init, false);
 
-        var html = '<ul class="list-group">';
+// function init() {
+// 	console.log('page init');
 
-        if(responseData.length > 0)
-        {
-            for(var count = 0; count < responseData.length; count++)
-            {
-                var regular_expression = new RegExp('('+query+')', 'gi');
+// 	dbSetup().then(function() {
+// 		console.log('db is setup');
+		
+// 		displayData();
 
-                html += '<a href="#" class="list-group-item list-group-item-action" onclick="get_text(this)">'+responseData[count].Source.replace(regular_expression, '<span class="text-primary fw-bold">$1</span>')+'</a>';
-            }
-        }
-        else
-        {
-            html += '<a href="#" class="list-group-item list-group-item-action disabled">No Data Found</a>';
-        }
+// 	}).catch(function(e) {
+// 		console.log('I had an issue making the db: '+e);	
+// 	});
+// }
 
-        html += '</ul>';
+// function dbSetup() {
+// 	var p = new Promise(function(resolve, reject) {
 
-        document.getElementById('search_result').innerHTML = html;
+// 		var req = window.indexedDB.open('page_test', 1);
 
-    });
-}
+// 		req.onupgradeneeded = function(e) {
+// 			var thedb = e.target.result;
+// 			var os = thedb.createObjectStore("cats", { autoIncrement:true});
+// 			os.createIndex("name", "name", {unique:false});
+// 			os.createIndex("age","age", {unique:false});
+// 		};
 
-var search_element = document.getElementById("autocomplete_search");
+// 		req.onsuccess = function(e) {
+// 			db = e.target.result;
+// 			resolve();
+// 		};
 
-search_element.onkeyup = function(){
+// 		req.onerror = function(e) {
+// 			reject(e);
+// 		};
 
-    var query = search_element.value;
+// 	});
+// 	return p;
+// }
 
-    load_data(query);
+// function displayData() {
+	
+// 	getData().then(function(cats) {
+// 		var s = '';
+// 		cats.forEach(function(cat) {
 
-};
+// 			s += `
+// <tr>
+// 	<td>${cat.name}</td>
+// 	<td>${cat.breed}</td>
+// 	<td>${cat.color}</td>
+// 	<td>${cat.age}</td>
+// </tr>`;
 
-search_element.onfocus = function(){
+// 		});
 
-    var query = search_element.value;
+// 		document.querySelector('table#catTable tbody').innerHTML = s;
+// 		console.log('got cats');
+// 	});
 
-    load_data(query);
+// }
 
-};
+// function getData() {
 
-function get_text(event)
-{
-    var Source = event.textContent;
+// 	var p = new Promise(function(resolve, reject) {
 
-    console.log(Source);
+// 		var t = db.transaction(['cats'],'readonly');
+// 		var catos = t.objectStore('cats');
+// 		var cats = [];
 
-    document.getElementById('autocomplete_search').value = Source;
+// 		catos.openCursor().onsuccess = function(e) {
+// 			var cursor = e.target.result;
+// 			if(cursor) {
+// 				cats.push(cursor.value);
+// 				cursor.continue();
+// 			} else {
+// 				resolve(cats);
+// 			}
+// 		};
 
-    document.getElementById('search_result').innerHTML = '';
-}
+// 	});
+
+// 	return p;
+// }
+
+// /*
+// there is no call to this, as it is a one time/test type thing.
+// */
+// function seedData() {
+
+// 	var getRandomInt = function(min, max) {
+// 		return Math.floor(Math.random() * (max - min + 1)) + min;
+// 	};
+ 
+// 	var randomName = function() {
+// 		var initialParts = ["Fluffy","Scruffy","King","Queen","Emperor","Lord","Hairy","Smelly","Most Exalted Knight","Crazy","Silly","Dumb","Brave","Sir","Fatty","Poopy","Scared","Old","Kid"];
+// 		var lastParts = ["Sam","Smoe","Elvira","Jacob","Lynn","Fufflepants the III","Squarehead","Redshirt","Titan","Kitten Zombie","Dumpster Fire","Butterfly Wings","Unicorn Rider"];
+// 		return initialParts[getRandomInt(0, initialParts.length-1)] + ' ' + lastParts[getRandomInt(0, lastParts.length-1)];
+// 	};
+ 
+// 	var randomColor = function() {
+// 		var colors = ["Red","Blue","Green","Yellow","Rainbow","White","Black","Invisible","Plaid","Angry"];
+// 		return colors[getRandomInt(0, colors.length-1)];
+// 	};
+ 
+// 	var randomGender = function() {
+// 		var genders = ["Male","Female"];
+// 		return genders[getRandomInt(0, genders.length-1)];
+// 	};
+ 
+//    var randomAge = function() {
+//      return getRandomInt(1, 15);
+//    };
+ 
+//    function randomBreed() {
+//      var breeds = ["American Shorthair","Abyssinian","American Curl","American Wirehair","Bengal","Chartreux","Devon Rex","Maine Coon","Manx","Persian","Siamese"];
+//      return breeds[getRandomInt(0, breeds.length-1)];
+//    }
+ 
+//    //make 25 cats
+//    var cats = [];
+//    for(var i=0;i<25;i++) {
+//      var cat = {
+//        name:randomName(),
+//        color:randomColor(),
+//        gender:randomGender(),
+//        age:randomAge(),
+//        breed:randomBreed()
+// 	   };
+// 	   cats.push(cat);
+//    }
+
+//    var catStore = db.transaction(['cats'], 'readwrite').objectStore('cats');
+//    cats.forEach(function(cat) {
+// 	   catStore.put(cat);
+// 	   console.log('I just stored a cat.');
+//    });
+
+// }

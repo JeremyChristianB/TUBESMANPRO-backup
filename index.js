@@ -27,11 +27,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/',home);
 
+app.use('/feature_search',search);
+
 app.use('/feature_graph',graph);
 
 app.use('/feature_graphbar',graphbar);
-
-app.use('/feature_search',search);
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);

@@ -43,7 +43,7 @@
 				Search
 			</a>
 			<br><br>
-			<form class="form1" method="post" action="/searchNama">
+			<form class="form1" method="post" action="searchNama">
 
 				<div class="form-group">
 					<select class="form-select" id="" aria-label="Default select example">
@@ -59,7 +59,7 @@
 				<div class="form-group">
 
 					<div class="input-group rounded">
-						<input type="search" id="autocomplete_search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+						<input type="search" name="search" id="autocomplete_search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
 						<span id="search_result"></span>
 					</div>
 					<br>
@@ -67,6 +67,23 @@
 						<button type="submit" class="btn btn-primary" id="btn_startshop">Search</button>
 					</p>
 				</div>
+				<table id="catTable">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Breed</th>
+							<th>Color</th>
+							<th>Age</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<p>
+					<button id="backButton" disabled>Back</button>
+					<button id="backButton" disabled>Forward</button>
+				</p>
+
 			  </form>
 
 		</div>

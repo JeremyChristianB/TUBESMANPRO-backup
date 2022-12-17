@@ -3,9 +3,21 @@ import { dbConnect } from '../controller/database.js';
 
 const router = express.Router();
 
-const getNama1 = (conn,nama) => {
+const getNama1 = conn => {
     return new Promise((resolve,reject) => {
-        conn.query(`SELECT * FROM book1 WHERE nama LIKE ?  `,(err,result) => {
+        conn.query(`SELECT * from book1`,(err,result) => {
+            if(err){
+                reject(err);
+            }else{
+                resolve(result);
+            }
+        })
+    })
+}
+
+const getNama = (conn) => {
+    return new Promise((resolve,reject) => {
+        conn.query(`SELECT * FROM book1`,(err,result) => {
             if(err){
                 reject(err);
             }else{
@@ -31,19 +43,20 @@ router.get('/',(req,res)=>{
     res.render('feature_search');
 });
 
-router.post('/searchNama',express.urlencoded(),async(req,res)=>{
-    const nama = req.body.nama;
+// router.post('/searchNama',express.urlencoded(),async(req,res)=>{
+//     const nama = req.body.nama;
 
+//     const conn = await dbConnect();
+//     const result = await getNama1(conn,nama);
+//     conn.release();
+
+// });
+
+router.post('/searchNama',express.urlencoded(),async(req, res) =>{
     const conn = await dbConnect();
-    const result = await getNama1(conn,nama);
-    conn.release();
-
-});
-
-router.get('/get_data',express.urlencoded(),async(req, res, next) =>{
-    const conn = await dbConnect();
-    const search_query = req.query.search_query;
-
+    const search_query = req.body.search;
+    let result = await getNama1(conn);
+    console.log(result);
     // var query = `
     // SELECT country_name FROM apps_countries 
     // WHERE country_name LIKE '%${search_query}%' 
@@ -55,8 +68,8 @@ router.get('/get_data',express.urlencoded(),async(req, res, next) =>{
     //     response.json(data);
 
     // });
-    res.json(await getAutoComplete1(conn,search_query)); 
-
+    // res.json(await getNama1(conn,search_query)); 
+    res.redirect('/feature_search');
 });
 
 export {router as search};
