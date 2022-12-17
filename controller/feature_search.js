@@ -27,7 +27,19 @@ const getNama = (conn) => {
     })
 }
 
-const getAutoComplete1 = (conn,nama) => {
+const getAutoComplete1 = (conn,nama,search_query) => {
+    return new Promise((resolve,reject) => {
+        conn.query(`SELECT Target,Source,weight FROM ${search_query} WHERE Source LIKE '%${nama}%' LIMIT 10 `,(err,result) => {
+            if(err){
+                reject(err);
+            }else{
+                resolve(result);
+            }
+        })
+    })
+}
+
+const getAutoComplete2 = (conn,nama) => {
     return new Promise((resolve,reject) => {
         conn.query(`SELECT Target,Source,weight FROM book1 WHERE Source LIKE '%${nama}%' LIMIT 10 `,(err,result) => {
             if(err){
@@ -55,7 +67,7 @@ const getAutoComplete1 = (conn,nama) => {
 router.get('/',express.urlencoded(),async(req, res) =>{
     const conn = await dbConnect();
     const search_query = req.body.search;
-    let result = await getAutoComplete1(conn,search_query);
+    let result = await getAutoComplete2(conn);
     console.log(result);
     // var query = `
     // SELECT country_name FROM apps_countries 
@@ -80,7 +92,8 @@ router.get('/',express.urlencoded(),async(req, res) =>{
 router.post('/',express.urlencoded(),async(req, res) =>{
     const conn = await dbConnect();
     const search_query = req.body.search;
-    let result = await getAutoComplete1(conn,search_query);
+    const book = req.body.book;
+    let result = await getAutoComplete1(conn,search_query,book);
     console.log(result);
     // var query = `
     // SELECT country_name FROM apps_countries 
