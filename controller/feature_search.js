@@ -29,7 +29,7 @@ const getNama = (conn) => {
 
 const getAutoComplete1 = (conn,nama) => {
     return new Promise((resolve,reject) => {
-        conn.query(`SELECT Source FROM book1 WHERE Source LIKE '%${nama}%' LIMIT 10 `,(err,result) => {
+        conn.query(`SELECT Target FROM book1 WHERE Source LIKE '%${nama}%' LIMIT 10 `,(err,result) => {
             if(err){
                 reject(err);
             }else{
@@ -39,9 +39,9 @@ const getAutoComplete1 = (conn,nama) => {
     })
 }
 
-router.get('/',(req,res)=>{
-    res.render('feature_search');
-});
+// router.get('/',(req,res)=>{
+//     res.render('feature_search');
+// });
 
 // router.post('/searchNama',express.urlencoded(),async(req,res)=>{
 //     const nama = req.body.nama;
@@ -52,10 +52,10 @@ router.get('/',(req,res)=>{
 
 // });
 
-router.post('/searchNama',express.urlencoded(),async(req, res) =>{
+router.get('/',express.urlencoded(),async(req, res) =>{
     const conn = await dbConnect();
     const search_query = req.body.search;
-    let result = await getNama1(conn);
+    let result = await getAutoComplete1(conn,search_query);
     console.log(result);
     // var query = `
     // SELECT country_name FROM apps_countries 
@@ -69,7 +69,37 @@ router.post('/searchNama',express.urlencoded(),async(req, res) =>{
 
     // });
     // res.json(await getNama1(conn,search_query)); 
-    res.redirect('/feature_search');
+    // res.redirect('/feature_search');
+
+    res.render('feature_search',{
+        result
+    });
+
+});
+
+router.post('/',express.urlencoded(),async(req, res) =>{
+    const conn = await dbConnect();
+    const search_query = req.body.search;
+    let result = await getAutoComplete1(conn,search_query);
+    console.log(result);
+    // var query = `
+    // SELECT country_name FROM apps_countries 
+    // WHERE country_name LIKE '%${search_query}%' 
+    // LIMIT 10
+    // `;
+
+    // conn.query(query, function(error, data){
+    //     console.log(data);
+    //     response.json(data);
+
+    // });
+    // res.json(await getNama1(conn,search_query)); 
+    // res.redirect('/feature_search');
+
+    res.render('feature_search',{
+        result
+    });
+
 });
 
 export {router as search};

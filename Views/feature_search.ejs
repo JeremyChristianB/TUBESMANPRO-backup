@@ -43,7 +43,7 @@
 				Search
 			</a>
 			<br><br>
-			<form class="form1" method="post" action="searchNama">
+			<form class="form1" method="post" action="/feature_search">
 
 				<div class="form-group">
 					<select class="form-select" id="" aria-label="Default select example">
@@ -67,6 +67,9 @@
 						<button type="submit" class="btn btn-primary" id="btn_startshop">Search</button>
 					</p>
 				</div>
+
+
+
 				<table id="catTable">
 					<thead>
 						<tr>
@@ -85,6 +88,17 @@
 				</p>
 
 			  </form>
+
+			  <table>
+				<tr>
+					<th>Role</th>
+				</tr>
+				<% for(const row of result) { %>
+					<tr>
+						<td><%= row.Target %></td>
+					</tr>
+				<% } %>
+				<table>
 
 		</div>
 		<a id="help"></a>
