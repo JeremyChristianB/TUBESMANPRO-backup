@@ -244,6 +244,17 @@ div.scrollmenu {
   margin-right: auto;
 }
 
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
 div.scrollmenu a {
   color: white;
   text-align: center;

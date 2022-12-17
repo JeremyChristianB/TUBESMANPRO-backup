@@ -68,39 +68,22 @@
 					</p>
 				</div>
 
-
-
-				<table id="catTable">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Breed</th>
-							<th>Color</th>
-							<th>Age</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-				</table>
-
-				<p>
-					<button id="backButton" disabled>Back</button>
-					<button id="backButton" disabled>Forward</button>
-				</p>
-
-			  </form>
-
-			  <table>
-				<tr>
-					<th>Role</th>
-				</tr>
-				<% for(const row of result) { %>
-					<tr>
-						<td><%= row.Target %></td>
-						<td><%= row.weight %></td>
-						<td><%= row.Source %></td>
-					</tr>
-				<% } %>
 				<table>
+					<tr>
+						<th>Target</th>
+						<th>weight</th>
+						<th>Source</th>
+					</tr>
+					<% for(const row of result) { %>
+						<tr>
+							<td><%= row.Target %></td>
+							<td><%= row.weight %></td>
+							<td><%= row.Source %></td>
+						</tr>
+					<% } %>
+					<table>
+	
+			  </form>
 
 		</div>
 		<a id="help"></a>
