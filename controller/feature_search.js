@@ -29,7 +29,7 @@ const getNama = (conn) => {
 
 const getAutoComplete1 = (conn,nama) => {
     return new Promise((resolve,reject) => {
-        conn.query(`SELECT Target FROM book1 WHERE Source LIKE '%${nama}%' LIMIT 10 `,(err,result) => {
+        conn.query(`SELECT Target,Source,weight FROM book1 WHERE Source LIKE '%${nama}%' LIMIT 10 `,(err,result) => {
             if(err){
                 reject(err);
             }else{
